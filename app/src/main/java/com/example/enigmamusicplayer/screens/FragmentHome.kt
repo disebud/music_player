@@ -10,21 +10,19 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-
+import com.example.enigmamusicplayer.AlbumRecycleAdapter
 import com.example.enigmamusicplayer.R
-import com.example.enigmamusicplayer.SongRecycleAdapter
-import com.example.enigmamusicplayer.viewmodel.SongViewModel
-import kotlinx.android.synthetic.main.fragment_song_list.*
+import com.example.enigmamusicplayer.viewmodel.AlbumViewModel
+import kotlinx.android.synthetic.main.fragment_home.*
 
+class FragmentHome : Fragment(), View.OnClickListener {
 
-class SongListFragment : Fragment(),View.OnClickListener {
-    val songViewModel by activityViewModels<SongViewModel>()
-    lateinit var adapter: SongRecycleAdapter
-    lateinit var navController: NavController
+    private val albumViewModel by activityViewModels<AlbumViewModel>()
+    private lateinit var albumRecycleAdapter: AlbumRecycleAdapter
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -32,17 +30,15 @@ class SongListFragment : Fragment(),View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_song_list, container, false)
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        song_recycleView.layoutManager = LinearLayoutManager(this.context)
-        adapter = SongRecycleAdapter(songViewModel)
-        song_recycleView.adapter = adapter
-
-        songViewModel.songData.observe(viewLifecycleOwner,Observer{
-            adapter.notifyDataSetChanged()
+        song_recycle_view.layoutManager = LinearLayoutManager(activity)
+        albumViewModel.allAlbum.observe(viewLifecycleOwner, Observer {
+            albumRecycleAdapter = AlbumRecycleAdapter(it, activity)
+            song_recycle_view.adapter = albumRecycleAdapter
         })
 
         fab.setOnClickListener(this)
@@ -51,8 +47,7 @@ class SongListFragment : Fragment(),View.OnClickListener {
 
     override fun onClick(v: View?) {
         when(v){
-            fab -> {navController.navigate(R.id.action_listFragment_to_inputSongFragment)}
+            fab -> {navController.navigate(R.id.action_fragmentHome_to_inputAlbumFragment)}
         }
     }
-
 }

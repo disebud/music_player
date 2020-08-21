@@ -3,29 +3,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/listFragment">
+    app:startDestination="@id/fragmentHome">
 
 
-    <fragment
-        android:id="@+id/listFragment"
-        android:name="com.example.enigmamusicplayer.screens.SongListFragment"
-        android:label="fragment_detail"
-        tools:layout="@layout/fragment_song_list" >
-        <action
-            android:id="@+id/action_listFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-        <action
-            android:id="@+id/action_listFragment_to_inputSongFragment"
-            app:destination="@id/inputSongFragment" />
-    </fragment>
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.enigmamusicplayer.screens.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <action
+            android:id="@+id/action_detailFragment_to_inputSongFragment"
+            app:destination="@id/inputSongFragment" />
+    </fragment>
     <fragment
         android:id="@+id/inputSongFragment"
         android:name="com.example.enigmamusicplayer.screens.InputSongFragment"
         android:label="fragment_input_song"
-        tools:layout="@layout/fragment_input_song" />
+        tools:layout="@layout/fragment_input_song">
+        <action
+            android:id="@+id/action_inputSongFragment_pop"
+            app:popUpTo="@id/detailFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_inputSongFragment_pop2"
+            app:popUpTo="@id/inputSongFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentHome"
+        android:name="com.example.enigmamusicplayer.screens.FragmentHome"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_fragmentHome_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <action
+            android:id="@+id/action_fragmentHome_to_inputAlbumFragment"
+            app:destination="@id/inputAlbumFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/inputAlbumFragment"
+        android:name="com.example.enigmamusicplayer.screens.InputAlbumFragment"
+        android:label="fragment_input_album"
+        tools:layout="@layout/fragment_input_album" >
+        <action
+        android:id="@+id/action_inputAlbumFragment_pop"
+        app:popUpTo="@+id/inputAlbumFragment"
+        app:popUpToInclusive="true" />
+    </fragment>
 </navigation>
